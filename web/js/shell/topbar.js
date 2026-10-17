@@ -3,27 +3,41 @@ import { PlanIcon } from "../planIcon.js";
 import { isPages } from "../storageMode.js";
 import { examplePlans } from "../examples.js";
 
-function MenuGroup({ label, items }) {
-  const [open, setOpen] = useState(false);
-  useEffect(() => {
-    if (!open) return undefined;
-    const close = (event) => {
-      if (!event.target.closest(".topbar-menu")) setOpen(false);
-    };
-    document.addEventListener("pointerdown", close);
-    return () => document.removeEventListener("pointerdown", close);
-  }, [open]);
+function MenuGroup({ label, items, open, onToggle, onClose }) {
   return html`<div class=${`topbar-menu ${open ? "open" : ""}`}>
-    <button class="btn menu-trigger" type="button" aria-expanded=${open} onClick=${() => setOpen(!open)}>${label}<span>▾</span></button>
-    ${open && html`<div class="topbar-menu-popover">
-      ${items.map((item) => html`<button id=${item.id} key=${item.id} title=${item.description} class=${`menu-action ${item.primary ? "primary" : ""}`} type="button" onClick=${() => { setOpen(false); item.action(); }}>
-        <span class="menu-action-label">${item.icon && html`<${PlanIcon} itemId=${item.icon} />`}${item.label}</span>${item.hint && html`<span class="menu-action-hint">${item.hint}</span>`}
+    <button class="btn menu-trigger" type="button" aria-expanded=${open} aria-controls=${`topbar-menu-${label}`} onClick=${onToggle}>${label}<span>▾</span></button>
+    ${open && html`<div id=${`topbar-menu-${label}`} class="topbar-menu-popover">
+      ${items.map((item) => html`<button id=${item.id} key=${item.id} title=${item.description} class=${`menu-action ${item.primary ? "primary" : ""}`} type="button" onClick=${() => { onClose(); item.action(); }}>
+        <span class="menu-action-label">${item.icon && html`<span class="menu-action-icon"><${PlanIcon} itemId=${item.icon} /></span>`}<span>${item.label}</span></span>${item.hint && html`<span class="menu-action-hint">${item.hint}</span>`}
       </button>`)}
     </div>`}
   </div>`;
 }
 
 export function Topbar({ warnCount, planIcon, actions }) {
+  const [openMenu, setOpenMenu] = useState(null);
+  useEffect(() => {
+    if (!openMenu) return undefined;
+    const closeOutside = event => {
+      if (!event.target.closest(".topbar-menu")) setOpenMenu(null);
+    };
+    const closeOnEscape = event => {
+      if (event.key !== "Escape") return;
+      event.preventDefault();
+      event.stopPropagation();
+      document.querySelector('.topbar-menu.open .menu-trigger')?.focus();
+      setOpenMenu(null);
+    };
+    document.addEventListener("pointerdown", closeOutside);
+    document.addEventListener("keydown", closeOnEscape, true);
+    return () => {
+      document.removeEventListener("pointerdown", closeOutside);
+      document.removeEventListener("keydown", closeOnEscape, true);
+    };
+  }, [openMenu]);
+  const menuState = label => ({ open: openMenu === label,
+    onToggle: () => setOpenMenu(current => current === label ? null : label),
+    onClose: () => setOpenMenu(null) });
   const fileItems = [
     { id: "btnNew", label: "新建方案", action: actions.newPlan },
     { id: "btnOpen", label: "打开方案", action: actions.openPlans },
@@ -48,10 +62,10 @@ export function Topbar({ warnCount, planIcon, actions }) {
     <div class="brand"><span class="brand-mark">⚙</span><span class="brand-title">工厂配平编辑器</span>${isPages && html`<small title="数据仅保存在当前浏览器；清除网站数据会删除保存内容，请定期导出完整备份。">浏览器保存 · 请备份</small>`}</div>
     <div class="topbar-plan"><span class="plan-label">当前方案</span><button id="btnPlanIcon" class="plan-icon-button" type="button" aria-label="选择方案图标" title="选择方案图标（随方案保存）" onClick=${actions.chooseIcon}><${PlanIcon} itemId=${planIcon} /></button><input id="planName" class="plan-name-input" type="text" defaultValue="未命名方案" spellcheck=${false} /></div>
     <div class="topbar-actions grouped">
-      <${MenuGroup} label="文件" items=${fileItems} />
-      <${MenuGroup} label="示例" items=${examplePlans.map(example => ({ id: `example-${example.id}`, label: example.name, icon: example.icon, description: example.description, action: () => actions.openExample(example.id) }))} />
-      <${MenuGroup} label="工具" items=${toolItems} />
-      <${MenuGroup} label="导出" items=${exportItems} />
+      <${MenuGroup} label="文件" items=${fileItems} ...${menuState("文件")} />
+      <${MenuGroup} label="示例" items=${examplePlans.map(example => ({ id: `example-${example.id}`, label: example.name, icon: example.icon, description: example.description, action: () => actions.openExample(example.id) }))} ...${menuState("示例")} />
+      <${MenuGroup} label="工具" items=${toolItems} ...${menuState("工具")} />
+      <${MenuGroup} label="导出" items=${exportItems} ...${menuState("导出")} />
     </div>
     <div class="topbar-status"><span class=${`warn-badge ${warnCount > 0 ? "has-warn" : ""}`} title=${warnCount > 0 ? `${warnCount} 处供需不满足` : "供需均衡"}><span class="warn-dot"></span><span>${warnCount}</span></span></div>`;
 }
