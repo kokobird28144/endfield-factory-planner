@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>节点式工厂配平编辑器</title>
+  <link rel="stylesheet" href="./vendor/drawflow.min.css" />
+  <link rel="stylesheet" href="./css/styles.css" />
+  <link rel="stylesheet" href="./css/supply-scan.css" />
+</head>
+<body>
+  <!-- ================= 顶栏 ================= -->
+  <header class="topbar">
+    <div id="topbarShellRoot" class="topbar-shell-root"></div>
+  </header>
+
+  <!-- ================= 主体三栏 ================= -->
+  <main class="workspace">
+    <!-- 左侧：目录 / 元件 / 组件库 -->
+    <aside class="panel panel-left" id="leftPanel">
+      <div id="leftShellRoot" class="panel-shell-root"></div>
+    </aside>
+
+    <!-- 中央：画布 -->
+    <section class="canvas-wrap">
+      <div id="componentEditBar" class="component-edit-bar" hidden>
+        <button id="btnExitComponentEdit" class="btn">← 返回上一级</button>
+        <span class="ceb-icon">◧</span>
+        <span id="componentBreadcrumb" class="ceb-label">内部视图：</span>
+        <input id="componentEditName" class="ceb-name-input" type="text" spellcheck="false" />
+        <span id="internalModeBadge" class="internal-mode-badge">查看</span>
+        <span class="grow"></span>
+        <button id="btnBeginInternalEdit" class="btn">编辑内部</button>
+        <button id="btnSaveComponent" class="btn btn-primary" hidden>保存内部</button>
+      </div>
+      <div id="drawflow" class="parent-drawflow drawflow-canvas"></div>
+      <div id="balanceBarRoot"></div>
+      <div class="canvas-toolbar">
+        <button id="btnZoomOut" class="round-btn" title="缩小">−</button>
+        <button id="btnZoomReset" class="round-btn" title="复位">◎</button>
+        <button id="btnZoomIn" class="round-btn" title="放大">＋</button>
+        <span class="tb-sep"></span>
+        <button id="btnUndo" class="round-btn" type="button" title="撤销（Ctrl+Z）" aria-label="撤销" disabled>↶</button>
+        <button id="btnRedo" class="round-btn" type="button" title="重做（Ctrl+Y / Ctrl+Shift+Z）" aria-label="重做" disabled>↷</button>
+        <span class="tb-sep"></span>
+        <button id="btnAddBoard" class="round-btn" type="button" title="添加半透明底板" aria-label="添加半透明底板">▰</button>
+        <span class="tb-sep"></span>
+        <button id="btnSnapGrid" class="round-btn" type="button" aria-label="对齐到网格" aria-pressed="false" title="对齐到网格：已关闭">▦</button>
+        <button id="btnShowDemand" class="round-btn active" type="button" aria-label="显示卡片需求数字" aria-pressed="true" title="卡片需求数字：已显示">需</button>
+        <button id="btnShowWeight" class="round-btn active" type="button" aria-label="显示路径分配设置" aria-pressed="true" title="路径分配设置：已显示">配</button>
+        <details id="fontSettings" class="font-settings">
+          <summary class="round-btn" title="字号设置" aria-label="字号设置">字</summary>
+          <div class="font-settings-panel">
+            <label for="portFontSize">端口字号 <output id="portFontSizeValue" for="portFontSize">11 px</output></label>
+            <input id="portFontSize" type="range" min="9" max="18" step="0.5" value="11" />
+            <label for="edgeFontSize">连线流量字号 <output id="edgeFontSizeValue" for="edgeFontSize">10.5 px</output></label>
+            <input id="edgeFontSize" type="range" min="9" max="20" step="0.5" value="10.5" />
+            <p>即时生效，导出图片使用相同字号。</p>
+            <button id="resetFontSizes" class="btn btn-small" type="button">恢复默认</button>
+          </div>
+        </details>
+        <button id="btnClear" class="round-btn danger" title="清空画布">🗑</button>
+      </div>
+      <div class="canvas-legend">
+        <span class="legend-item"><i class="legend-line solid"></i>固体</span>
+        <span class="legend-item"><i class="legend-line liquid"></i>液体</span>
+        <span class="legend-item"><i class="legend-line gas"></i>气体</span>
+        <span class="legend-item" title="按住 W/A/S/D 可连续向上、左、下、右浏览画布">WASD 移动视图</span>
+        <span class="legend-item" title="Shift+拖动空白处框选；Ctrl+Shift+拖动可追加；拖动任一已选节点可整体移动">Shift 框选 · 多选拖动</span>
+        <span class="legend-item" title="底板空白处拖动，右下角调整大小，右键更换颜色">底板：拖动 · 右键换色</span>
+      </div>
+      <div id="canvasEmpty" class="canvas-empty">
+        <div class="empty-inner">
+          <div class="empty-title">开始搭建你的产线</div>
+          <div class="empty-desc">从左侧点击配方生成机器节点，或添加固定源 / 最终产物箱，然后拖动端口连线。<br>提示：右键机器的输入口，可直接选生产该物品的配方或固定源一键补链。</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 右侧：检查器 -->
+    <aside class="panel panel-right" id="inspector">
+      <div class="panel-head"><span>检查器</span></div>
+      <div id="inspectorShellRoot" class="inspector-shell-root"></div>
+    </aside>
+  </main>
+
+  <!-- ================= 弹窗：批量新增配方 ================= -->
+  <div id="recipeEditorModal" class="modal" hidden>
+    <div class="modal-backdrop" data-close="recipeEditorModal"></div>
+    <div class="modal-panel modal-wide">
+      <div class="modal-head">
+        <span class="modal-title">批量新增 / 编辑临时配方</span>
+        <button class="icon-btn" data-close="recipeEditorModal">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="editor-hint">
+          每行一条配方，最多 2 个输入、2 个输出。<b class="tmp-tag">临时</b> 配方仅存于本工具，不会写入原始配方库。
+          形态留空时按 <code>item_id</code> 前缀自动判定：<code>item_gas_</code> 为气体、<code>item_liquid_</code> 为液体，其余为固体。
+        </div>
+        <div class="table-scroll">
+          <table id="recipeEditorTable" class="grid-table">
+            <thead></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+        <div class="editor-actions">
+          <button id="btnAddRecipeRow" class="btn">＋ 添加一行</button>
+          <span class="grow"></span>
+          <span id="recipeEditorMsg" class="editor-msg"></span>
+          <button id="btnSaveRecipes" class="btn btn-primary">保存全部临时配方</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= 弹窗：产消表 ================= -->
+  <div id="prodTableModal" class="modal" hidden>
+    <div class="modal-backdrop" data-close="prodTableModal"></div>
+    <div class="modal-panel modal-wide">
+      <div class="modal-head">
+        <span class="modal-title">产物产消表</span>
+        <button class="icon-btn" data-close="prodTableModal">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="prod-section-title">最终产出（来自最终产物箱）</div>
+        <div class="table-scroll short">
+          <table id="finalOutputTable" class="grid-table"><thead></thead><tbody></tbody></table>
+        </div>
+        <div class="prod-section-title">全局产消（每分钟）</div>
+        <div class="table-scroll">
+          <table id="prodTable" class="grid-table"><thead></thead><tbody></tbody></table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= 弹窗：方案管理 ================= -->
+  <div id="planManagerModal" class="modal" hidden>
+    <div class="modal-backdrop" data-close="planManagerModal"></div>
+    <div class="modal-panel modal-wide">
+      <div class="modal-head">
+        <span class="modal-title">打开方案</span>
+        <button class="icon-btn" data-close="planManagerModal">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="plm-toolbar">
+          <input id="planManagerSearch" class="input search" type="text" placeholder="搜索方案名称…" spellcheck="false" />
+          <span class="grow"></span>
+          <span id="planManagerCount" class="muted"></span>
+          <div class="plan-view-switch" role="group" aria-label="方案视图">
+            <button id="btnPlanViewGrid" class="btn" type="button" aria-pressed="false">图标</button>
+            <button id="btnPlanViewList" class="btn" type="button" aria-pressed="true">列表</button>
+          </div>
+          <button id="btnPlanManagerRefresh" class="btn">刷新</button>
+        </div>
+        <div id="planManagerGrid" class="plan-grid"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= 弹窗：组合黑盒命名 ================= -->  <div id="blackboxModal" class="modal" hidden>
+    <div class="modal-backdrop" data-close="blackboxModal"></div>
+    <div class="modal-panel modal-narrow">
+      <div class="modal-head">
+        <span class="modal-title">组合为黑盒</span>
+        <button class="icon-btn" data-close="blackboxModal">✕</button>
+      </div>
+      <div class="modal-body">
+        <label class="field-label">组件名称</label>
+        <input id="blackboxName" class="input" type="text" placeholder="例如：锦草溶液产线" />
+        <div id="blackboxSummary" class="blackbox-summary"></div>
+        <div class="editor-actions">
+          <span class="grow"></span>
+          <button class="btn" data-close="blackboxModal">取消</button>
+          <button id="btnConfirmBlackbox" class="btn btn-primary">创建并保存</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="commandPaletteRoot"></div>
+
+  <!-- ================= 通知 ================= -->
+  <div id="toast" class="toast" hidden></div>
+
+  <!-- ================= 脚本 ================= -->
+  <script src="./vendor/drawflow.min.js"></script>
+  <script src="./vendor/html2canvas.min.js"></script>
+  <script type="module" src="./js/main.js"></script>
+</body>
+</html>

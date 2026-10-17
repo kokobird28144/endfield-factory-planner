@@ -1,0 +1,320 @@
+[
+  {
+    "page_item_id": "item_liquid_sewage",
+    "page_name_cn": "污水",
+    "section": "特殊配方",
+    "recipe_name": "废水处理·污水",
+    "facility_id": "waste_treater_1",
+    "facility_name_cn": "废水处理机",
+    "time_sec": 2.0,
+    "inputs": [
+      {
+        "item_id": "item_liquid_sewage",
+        "name_cn": "污水",
+        "qty": 1,
+        "rate_per_min": 30.0
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "page_item_id": "item_liquid_xiranite_poly",
+    "page_name_cn": "壤晶废液",
+    "section": "特殊配方",
+    "recipe_name": "废水处理·壤晶废液",
+    "facility_id": "waste_treater_1",
+    "facility_name_cn": "废水处理机",
+    "time_sec": 2.0,
+    "inputs": [
+      {
+        "item_id": "item_liquid_xiranite_poly",
+        "name_cn": "壤晶废液",
+        "qty": 1,
+        "rate_per_min": 30.0
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "page_item_id": "item_liquid_xiranite_lowpoly",
+    "page_name_cn": "惰性壤晶废液",
+    "section": "特殊配方",
+    "recipe_name": "废水处理·惰性壤晶废液",
+    "facility_id": "waste_treater_1",
+    "facility_name_cn": "废水处理机",
+    "time_sec": 2.0,
+    "inputs": [
+      {
+        "item_id": "item_liquid_xiranite_lowpoly",
+        "name_cn": "惰性壤晶废液",
+        "qty": 1,
+        "rate_per_min": 30.0
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "page_item_id": "item_liquid_xiranite_poly",
+    "page_name_cn": "壤晶废液",
+    "section": "特殊配方",
+    "recipe_name": "净流节点",
+    "facility_id": "purifier_node_1",
+    "facility_name_cn": "净流节点",
+    "time_sec": 60.0,
+    "inputs": [
+      {
+        "item_id": "item_liquid_sewage",
+        "name_cn": "污水",
+        "qty": 360,
+        "rate_per_min": 360.0
+      }
+    ],
+    "outputs": [
+      {
+        "item_id": "item_liquid_xiranite_poly",
+        "name_cn": "壤晶废液",
+        "qty": 12,
+        "rate_per_min": 12.0
+      }
+    ]
+  },
+  {
+    "page_item_id": "item_liquid_xiranite",
+    "page_name_cn": "液化息壤",
+    "section": "特殊配方",
+    "recipe_name": "液气转化机·消耗液化息壤",
+    "facility_id": "transmuter_1",
+    "facility_name_cn": "液气转化机",
+    "time_sec": 60.0,
+    "note": "机器运转时的恒定消耗（类似耗电量）：每分钟固定消耗 6 液化息壤（液化息壤）；正常/半速运行都恒定为 6/分钟，不随运行速度或配方产量变化。这是运转开销，与该机器实际配方（投入→产出的转化）分开计算，本条目不代表配方本身。",
+    "inputs": [
+      {
+        "item_id": "item_liquid_xiranite",
+        "name_cn": "液化息壤",
+        "qty": 6,
+        "rate_per_min": 6.0,
+        "fixed": true
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "page_item_id": "item_gas_xiranite",
+    "page_name_cn": "息壤气",
+    "section": "特殊配方",
+    "recipe_name": "固气转化机·消耗息壤气",
+    "facility_id": "transmuter_2",
+    "facility_name_cn": "固气转化机",
+    "time_sec": 60.0,
+    "note": "机器运转时的恒定消耗（类似耗电量）：每分钟固定消耗 6 息壤气；正常/半速运行都恒定为 6/分钟，不随运行速度或配方产量变化。这是运转开销，与该机器实际配方（投入→产出的转化）分开计算，本条目不代表配方本身。",
+    "inputs": [
+      {
+        "item_id": "item_gas_xiranite",
+        "name_cn": "息壤气",
+        "qty": 6,
+        "rate_per_min": 6.0,
+        "fixed": true
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "page_item_id": "item_gas_acid",
+    "page_name_cn": "酸气",
+    "section": "特殊配方",
+    "recipe_name": "气体散布机·散布酸气",
+    "facility_id": "vaporizer_1",
+    "facility_name_cn": "气体散布机",
+    "time_sec": 60.0,
+    "note": "机器运转时的恒定消耗（类似耗电量）：每分钟固定消耗 6 对应气体；正常/半速运行都恒定为 6/分钟，不随运行速度变化。气体散布机没有配方（只把气体散布到环境、不产出物品），此消耗就是它运转的全部开销。",
+    "inputs": [
+      {
+        "item_id": "item_gas_acid",
+        "name_cn": "酸气",
+        "qty": 6,
+        "rate_per_min": 6.0,
+        "fixed": true
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "page_item_id": "item_gas_copper",
+    "page_name_cn": "气态赤铜",
+    "section": "特殊配方",
+    "recipe_name": "气体散布机·散布气态赤铜",
+    "facility_id": "vaporizer_1",
+    "facility_name_cn": "气体散布机",
+    "time_sec": 60.0,
+    "note": "机器运转时的恒定消耗（类似耗电量）：每分钟固定消耗 6 对应气体；正常/半速运行都恒定为 6/分钟，不随运行速度变化。气体散布机没有配方（只把气体散布到环境、不产出物品），此消耗就是它运转的全部开销。",
+    "inputs": [
+      {
+        "item_id": "item_gas_copper",
+        "name_cn": "气态赤铜",
+        "qty": 6,
+        "rate_per_min": 6.0,
+        "fixed": true
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "page_item_id": "item_gas_copper_enr",
+    "page_name_cn": "气态赫铜",
+    "section": "特殊配方",
+    "recipe_name": "气体散布机·散布气态赫铜",
+    "facility_id": "vaporizer_1",
+    "facility_name_cn": "气体散布机",
+    "time_sec": 60.0,
+    "note": "机器运转时的恒定消耗（类似耗电量）：每分钟固定消耗 6 对应气体；正常/半速运行都恒定为 6/分钟，不随运行速度变化。气体散布机没有配方（只把气体散布到环境、不产出物品），此消耗就是它运转的全部开销。",
+    "inputs": [
+      {
+        "item_id": "item_gas_copper_enr",
+        "name_cn": "气态赫铜",
+        "qty": 6,
+        "rate_per_min": 6.0,
+        "fixed": true
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "page_item_id": "item_gas_copper_enr2",
+    "page_name_cn": "气态灼铜",
+    "section": "特殊配方",
+    "recipe_name": "气体散布机·散布气态灼铜",
+    "facility_id": "vaporizer_1",
+    "facility_name_cn": "气体散布机",
+    "time_sec": 60.0,
+    "note": "机器运转时的恒定消耗（类似耗电量）：每分钟固定消耗 6 对应气体；正常/半速运行都恒定为 6/分钟，不随运行速度变化。气体散布机没有配方（只把气体散布到环境、不产出物品），此消耗就是它运转的全部开销。",
+    "inputs": [
+      {
+        "item_id": "item_gas_copper_enr2",
+        "name_cn": "气态灼铜",
+        "qty": 6,
+        "rate_per_min": 6.0,
+        "fixed": true
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "page_item_id": "item_gas_inert",
+    "page_name_cn": "惰气",
+    "section": "特殊配方",
+    "recipe_name": "气体散布机·散布惰气",
+    "facility_id": "vaporizer_1",
+    "facility_name_cn": "气体散布机",
+    "time_sec": 60.0,
+    "note": "机器运转时的恒定消耗（类似耗电量）：每分钟固定消耗 6 对应气体；正常/半速运行都恒定为 6/分钟，不随运行速度变化。气体散布机没有配方（只把气体散布到环境、不产出物品），此消耗就是它运转的全部开销。",
+    "inputs": [
+      {
+        "item_id": "item_gas_inert",
+        "name_cn": "惰气",
+        "qty": 6,
+        "rate_per_min": 6.0,
+        "fixed": true
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "page_item_id": "item_gas_water",
+    "page_name_cn": "水蒸气",
+    "section": "特殊配方",
+    "recipe_name": "气体散布机·散布水蒸气",
+    "facility_id": "vaporizer_1",
+    "facility_name_cn": "气体散布机",
+    "time_sec": 60.0,
+    "note": "机器运转时的恒定消耗（类似耗电量）：每分钟固定消耗 6 对应气体；正常/半速运行都恒定为 6/分钟，不随运行速度变化。气体散布机没有配方（只把气体散布到环境、不产出物品），此消耗就是它运转的全部开销。",
+    "inputs": [
+      {
+        "item_id": "item_gas_water",
+        "name_cn": "水蒸气",
+        "qty": 6,
+        "rate_per_min": 6.0,
+        "fixed": true
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "page_item_id": "item_gas_xiranite",
+    "page_name_cn": "息壤气",
+    "section": "特殊配方",
+    "recipe_name": "气体散布机·散布息壤气",
+    "facility_id": "vaporizer_1",
+    "facility_name_cn": "气体散布机",
+    "time_sec": 60.0,
+    "note": "机器运转时的恒定消耗（类似耗电量）：每分钟固定消耗 6 对应气体；正常/半速运行都恒定为 6/分钟，不随运行速度变化。气体散布机没有配方（只把气体散布到环境、不产出物品），此消耗就是它运转的全部开销。",
+    "inputs": [
+      {
+        "item_id": "item_gas_xiranite",
+        "name_cn": "息壤气",
+        "qty": 6,
+        "rate_per_min": 6.0,
+        "fixed": true
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "page_item_id": "item_gas_xiranite_enr",
+    "page_name_cn": "重息壤气",
+    "section": "特殊配方",
+    "recipe_name": "气体散布机·散布重息壤气",
+    "facility_id": "vaporizer_1",
+    "facility_name_cn": "气体散布机",
+    "time_sec": 60.0,
+    "note": "机器运转时的恒定消耗（类似耗电量）：每分钟固定消耗 6 对应气体；正常/半速运行都恒定为 6/分钟，不随运行速度变化。气体散布机没有配方（只把气体散布到环境、不产出物品），此消耗就是它运转的全部开销。",
+    "inputs": [
+      {
+        "item_id": "item_gas_xiranite_enr",
+        "name_cn": "重息壤气",
+        "qty": 6,
+        "rate_per_min": 6.0,
+        "fixed": true
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "page_item_id": "item_gas_copper_enr",
+    "page_name_cn": "气态赫铜",
+    "section": "特殊配方",
+    "recipe_name": "气态灼铜生产-高效酸气",
+    "facility_id": "gas_reactor_1",
+    "facility_name_cn": "气体反应炉",
+    "time_sec": 2.0,
+  "note": "气态灼铜生产的高效酸气配方：速度为 1 时，除原有投入外额外消耗 1.5 酸气/分；酸气消耗按实际有效速度同比变化。",
+    "inputs": [
+      {
+        "item_id": "item_gas_copper_enr",
+        "name_cn": "气态赫铜",
+        "qty": 2,
+        "rate_per_min": 60.0
+      },
+      {
+        "item_id": "item_gas_xiranite",
+        "name_cn": "息壤气",
+        "qty": 1,
+        "rate_per_min": 30.0
+      },
+    {
+      "item_id": "item_gas_acid",
+      "name_cn": "酸气",
+      "qty": 0.05,
+      "rate_per_min": 1.5,
+      "proportional": true
+    }
+    ],
+    "outputs": [
+      {
+        "item_id": "item_gas_copper_enr2",
+        "name_cn": "气态灼铜",
+        "qty": 1,
+        "rate_per_min": 30.0
+      }
+    ]
+  }
+]

@@ -1,0 +1,48 @@
+# Publish only the runnable application and its README.
+/*
+!/.gitignore
+!/README.md
+!/LICENSE
+!/THIRD_PARTY_NOTICES.md
+!/server.py
+!/start.bat
+!/web/
+!/data/
+/data/*
+!/data/recipes/
+!/data/item_icons/
+
+# Local settings and credentials
+.codebuddy/
+.vscode/
+.env
+.env.*
+*.pem
+*.key
+
+# User plans, components and temporary recipes
+/data/runtime/
+
+# Generated output and local research material
+/release/
+/reports/
+/archive/
+/buffer_conservation_analysis/
+/paper_v3/
+/phase_portrait_example6/
+/zmd_dyn_capacity_fix/
+/zmd_dyn_example_update/
+/zmd_dyn_rate_scale/
+/notes.md
+/task_plan.md
+
+# Tool caches
+__pycache__/
+*.py[cod]
+node_modules/
+.venv/
+venv/
+*.log
+*.tmp
+.DS_Store
+Thumbs.db

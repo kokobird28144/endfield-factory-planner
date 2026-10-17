@@ -1,0 +1,94 @@
+.supply-scan { position: fixed; top: 12px; left: 50%; transform: translateX(-50%); z-index: 1200; width: min(1180px, calc(100vw - 24px)); height: min(620px, calc(100dvh - 24px)); min-width: 560px; min-height: 360px; max-width: calc(100vw - 24px); max-height: calc(100dvh - 24px); margin: 0; padding: 0; color: var(--text-1); background: var(--bg-1, #151b20); border: 1px solid var(--border-2); border-radius: 8px; overflow: hidden; resize: both; font-size: 13px; letter-spacing: 0; }
+.supply-scan::backdrop { background: transparent; }
+.scan-header { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 20px; border-bottom: 1px solid var(--border-1); }
+.scan-header { cursor: move; user-select: none; touch-action: none; }
+.scan-header button { cursor: pointer; }
+.scan-header h2 { margin: 0; font-size: 19px; }
+.scan-header small { color: #e2bd75; font-size: 12px; font-weight: normal; margin-left: 8px; }
+.scan-header button { font-size: 20px; width: 34px; height: 34px; padding: 0; }
+.scan-body { height: calc(100% - 67px); box-sizing: border-box; padding: 18px 20px; max-height: none; overflow: auto; }
+.scan-controls { display: flex; align-items: end; flex-wrap: wrap; gap: 10px; }
+.scan-secondary { margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--border-1); }
+.scan-segments { display: inline-flex; flex-wrap: wrap; gap: 2px; padding: 2px; border: 1px solid var(--border-2); border-radius: 5px; }
+.scan-toolbar { display: flex; align-items: center; flex-wrap: wrap; gap: 10px 20px; margin-bottom: 12px; }
+.scan-scope-controls { display: flex; align-items: center; gap: 10px; max-width: 100%; }
+.scan-scope-label { color: var(--text-2); white-space: nowrap; }
+.scan-scope-controls [data-refresh] { width: 34px; height: 34px; padding: 0; flex: 0 0 34px; }
+.scan-setup > summary { color: var(--text-2); cursor: pointer; margin-bottom: 10px; }
+.supply-scan .scan-segments label { display: flex; flex-direction: row; align-items: center; padding: 6px 10px; gap: 5px; cursor: pointer; font-size: 12px; border-radius: 3px; }
+.scan-segments label:has(input:checked) { background: var(--bg-2); color: var(--text-1); }
+.scan-segments input { accent-color: #48c9a4; margin: 0; }
+.supply-scan label { display: flex; flex-direction: column; gap: 6px; color: var(--text-2); min-width: 0; }
+.supply-scan input[type=number], .supply-scan select { width: 100%; min-width: 0; height: 34px; padding: 5px 8px; color: var(--text-1); background: var(--bg-2); border: 1px solid var(--border-2); border-radius: 4px; font: inherit; }
+.supply-scan input:focus, .supply-scan select:focus { outline: 2px solid #48c9a4; outline-offset: 1px; }
+.scan-controls label { width: auto; }
+.scan-controls .scan-source { min-width: 0; }
+.scan-controls.scan-secondary,
+.scan-controls:not(.scan-secondary) {
+  display: grid;
+  grid-template-columns: minmax(300px, 1fr) repeat(3, 120px) 110px;
+  align-items: end;
+}
+.scan-controls:not(.scan-secondary) > [data-run],
+.scan-controls:not(.scan-secondary) > [data-cancel] { grid-column: 5; }
+.scan-controls.scan-secondary::after { content: ""; grid-column: 5; }
+.supply-scan button { white-space: nowrap; min-height: 34px; }
+.scan-config { margin-top: 18px; border-top: 1px solid var(--border-1); border-bottom: 1px solid var(--border-1); padding: 12px 0; }
+.scan-config summary { cursor: pointer; color: var(--text-2); }
+.scan-config h3, .scan-tables h3 { font-size: 13px; margin: 16px 0 8px; }
+.scan-table-scroll { overflow: auto; }
+.supply-scan table { width: 100%; border-collapse: collapse; font-size: 12px; }
+.supply-scan th, .supply-scan td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--border-1); overflow-wrap: anywhere; }
+.supply-scan th { font-weight: normal; color: var(--text-3); }
+.scan-config table { min-width: 460px; }
+.scan-config .scan-edge-config { min-width: 780px; }
+.scan-config td:first-child { width: 35%; }
+.scan-config input[type=number] { max-width: 120px; }
+.scan-config input[type=checkbox] { accent-color: #48c9a4; width: 17px; height: 17px; }
+.scan-item-icon { width: 22px; height: 22px; object-fit: contain; vertical-align: middle; margin-right: 7px; }
+.scan-status { margin: 14px 0; color: #e2bd75; min-height: 20px; }
+.scan-result-bar { display: flex; align-items: center; gap: 16px; margin-bottom: 12px; }
+.scan-view-options { display: flex; align-items: center; flex-wrap: wrap; gap: 10px 16px; margin-bottom: 12px; }
+.scan-view-options label { min-width: min(180px, 100%); max-width: 100%; }
+.scan-view-options [data-axis-caption] { flex: 1 1 260px; color: var(--text-2); font-size: 12px; line-height: 1.6; overflow-wrap: anywhere; }
+.scan-result-bar button { margin-left: auto; }
+.scan-product-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr)); gap: 8px 18px; margin-bottom: 14px; max-height: 180px; overflow-y: auto; }
+.scan-rejections { margin-bottom: 14px; }
+.scan-rejections > summary { cursor: pointer; color: var(--text-2); }
+.scan-rejections .scan-product-list { margin: 10px 0 0; }
+.supply-scan .scan-product { display: grid; grid-template-columns: 16px 22px minmax(0, 1fr) auto; align-items: center; gap: 7px; min-height: 26px; cursor: pointer; }
+.scan-product input { width: 16px; height: 16px; margin: 0; accent-color: #48c9a4; }
+.scan-swatch { width: 22px; border-top: 3px solid; }
+.scan-product-name { overflow-wrap: anywhere; line-height: 1.4; }
+.scan-product output { font-variant-numeric: tabular-nums; color: var(--text-1); }
+.scan-product:has(input:not(:checked)) .scan-product-name { color: var(--text-3); }
+.scan-chart-wrap { width: 100%; height: 260px; }
+.scan-chart-wrap.is-heat { height: 320px; }
+.scan-chart-wrap canvas { display: block; width: 100%; height: 100%; cursor: crosshair; }
+.scan-point { display: flex; flex-wrap: wrap; align-items: center; gap: 20px; padding: 16px 0; border-bottom: 1px solid var(--border-1); }
+.scan-point label { width: 260px; max-width: 100%; display: grid; grid-template-columns: minmax(0, 1fr) auto; }
+.scan-point label span, .scan-point [data-summary] { overflow-wrap: anywhere; }
+.scan-point input { grid-column: 1 / -1; width: 100%; accent-color: #e2bd75; }
+.scan-point output { color: var(--text-1); }
+.scan-point [data-summary] { flex: 1 1 220px; line-height: 1.8; }
+.scan-tables { display: grid; grid-template-columns: 1fr 1.15fr; gap: 24px; }
+.scan-tables section { min-width: 0; }
+.scan-detail { margin-top: 14px; }
+.scan-detail summary { color: var(--text-2); cursor: pointer; }
+.scan-tables td:not(:first-child) { white-space: nowrap; }
+.supply-scan [hidden] { display: none !important; }
+@media (max-width: 700px) {
+  .supply-scan { min-width: 0; min-height: 320px; width: calc(100vw - 24px); height: calc(100dvh - 24px); }
+  .scan-body { padding: 12px; }
+  .scan-header { padding: 10px 12px; }
+  .scan-controls:not(.scan-secondary), .scan-controls.scan-secondary { grid-template-columns: minmax(0, 1fr) repeat(2, minmax(78px, 1fr)); }
+  .scan-controls .scan-source { grid-column: 1 / -1; }
+  .scan-controls:not(.scan-secondary) > [data-run],
+  .scan-controls:not(.scan-secondary) > [data-cancel] { grid-column: 1 / -1; }
+  .scan-controls.scan-secondary::after { display: none; }
+  .scan-tables { grid-template-columns: 1fr; gap: 4px; }
+  .scan-chart-wrap { height: 220px; }
+  .scan-chart-wrap.is-heat { height: 270px; }
+  .scan-result-bar { gap: 8px; }
+  .supply-scan .scan-segments label { padding: 6px; }
+}
