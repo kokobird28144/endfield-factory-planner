@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "app": "zmd_recipe",
+  "meta": { "name": "示例-铁制零件基础产线", "icon_item_id": "item_iron_cmpt" },
+  "nodes": [
+    { "id": "ore", "type": "source", "label": "蓝铁矿 · 30/分", "custom_label": true, "x": 40, "y": 160, "source_outputs": [{ "item_id": "item_iron_ore", "rate": "30" }], "ports": { "inputs": [], "outputs": ["item_iron_ore"] } },
+    { "id": "refine", "type": "machine", "x": 350, "y": 160, "speed": "1", "auto_slow": true,
+      "recipe_ref": { "page_item_id": "item_iron_nugget", "recipe_name": "蓝铁块生产", "facility_id": "furnance_1", "recipe_signature": "item_iron_ore:30=>item_iron_nugget:30" },
+      "ports": { "inputs": ["item_iron_ore"], "outputs": ["item_iron_nugget"] } },
+    { "id": "parts", "type": "machine", "x": 660, "y": 160, "speed": "1", "auto_slow": true,
+      "recipe_ref": { "page_item_id": "item_iron_nugget", "recipe_name": "铁制零件生产", "facility_id": "component_mc_1", "recipe_signature": "item_iron_nugget:30=>item_iron_cmpt:30" },
+      "ports": { "inputs": ["item_iron_nugget"], "outputs": ["item_iron_cmpt"] } },
+    { "id": "out", "type": "sink", "label": "铁制零件 · 30/分", "custom_label": true, "x": 970, "y": 160, "box_kind": "final", "ports": { "inputs": [null], "outputs": [] } }
+  ],
+  "edges": [
+    { "id": "e1", "from": "ore", "to": "refine", "from_port": 0, "to_port": 0, "mode": "weight", "weight": 1 },
+    { "id": "e2", "from": "refine", "to": "parts", "from_port": 0, "to_port": 0, "mode": "weight", "weight": 1 },
+    { "id": "e3", "from": "parts", "to": "out", "from_port": 0, "to_port": 0, "mode": "weight", "weight": 1 }
+  ],
+  "boards": []
+}

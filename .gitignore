@@ -5,6 +5,11 @@
 !/LICENSE
 !/THIRD_PARTY_NOTICES.md
 !/.github/
+!/.agents/
+/.agents/*
+!/.agents/skills/
+/.agents/skills/*
+!/.agents/skills/factory-plan-json/
 !/server.py
 !/start.bat
 !/web/

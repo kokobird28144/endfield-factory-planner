@@ -62,6 +62,15 @@ Pages 导入通过单个事务完成；本地模式逐文件写入，失败时�
 - `data/recipes/`：配方库。
 - `data/item_icons/`：物品图标。
 
+## AI 生成生产流程
+
+项目内提供 [factory-plan-json skill](.agents/skills/factory-plan-json/SKILL.md)，指导 AI 生成可通过“文件 → 导入方案 JSON”导入的产线文件，包括配方引用、零基端口、分流规则和验证步骤。
+支持项目 skill 的工具可从 `.agents/skills/` 发现它；其他工具可直接读取该文件。
+
+示例提示词：`请按照 factory-plan-json skill，生成每分钟 30 个铁制零件的生产流程 JSON，使用内置配方，设置方案名和图标，并验证可导入性。`
+
+可下载 [完整 JSON 样例](.agents/skills/factory-plan-json/assets/example-iron-parts.json) 后导入。
+
 ## 许可证
 
 原创代码采用 [MIT License](LICENSE)。第三方库、游戏图标和外部配方数据的来源与许可说明见 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)。
