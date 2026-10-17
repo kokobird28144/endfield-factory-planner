@@ -1,6 +1,7 @@
 import { html, useEffect, useState } from "../../vendor/preact-standalone.module.js";
 import { PlanIcon } from "../planIcon.js";
 import { isPages } from "../storageMode.js";
+import { examplePlans } from "../examples.js";
 
 function MenuGroup({ label, items }) {
   const [open, setOpen] = useState(false);
@@ -15,8 +16,8 @@ function MenuGroup({ label, items }) {
   return html`<div class=${`topbar-menu ${open ? "open" : ""}`}>
     <button class="btn menu-trigger" type="button" aria-expanded=${open} onClick=${() => setOpen(!open)}>${label}<span>▾</span></button>
     ${open && html`<div class="topbar-menu-popover">
-      ${items.map((item) => html`<button id=${item.id} key=${item.id} class=${`menu-action ${item.primary ? "primary" : ""}`} type="button" onClick=${() => { setOpen(false); item.action(); }}>
-        <span class="menu-action-label">${item.label}</span>${item.hint && html`<span class="menu-action-hint">${item.hint}</span>`}
+      ${items.map((item) => html`<button id=${item.id} key=${item.id} title=${item.description} class=${`menu-action ${item.primary ? "primary" : ""}`} type="button" onClick=${() => { setOpen(false); item.action(); }}>
+        <span class="menu-action-label">${item.icon && html`<${PlanIcon} itemId=${item.icon} />`}${item.label}</span>${item.hint && html`<span class="menu-action-hint">${item.hint}</span>`}
       </button>`)}
     </div>`}
   </div>`;
@@ -48,6 +49,7 @@ export function Topbar({ warnCount, planIcon, actions }) {
     <div class="topbar-plan"><span class="plan-label">当前方案</span><button id="btnPlanIcon" class="plan-icon-button" type="button" aria-label="选择方案图标" title="选择方案图标（随方案保存）" onClick=${actions.chooseIcon}><${PlanIcon} itemId=${planIcon} /></button><input id="planName" class="plan-name-input" type="text" defaultValue="未命名方案" spellcheck=${false} /></div>
     <div class="topbar-actions grouped">
       <${MenuGroup} label="文件" items=${fileItems} />
+      <${MenuGroup} label="示例" items=${examplePlans.map(example => ({ id: `example-${example.id}`, label: example.name, icon: example.icon, description: example.description, action: () => actions.openExample(example.id) }))} />
       <${MenuGroup} label="工具" items=${toolItems} />
       <${MenuGroup} label="导出" items=${exportItems} />
     </div>

@@ -17,6 +17,7 @@ import { openSupplyScan } from "./supplyScan.js";
 import { downloadJson, selectJson, exportBackup, importBackup } from "./backup.js";
 import { validateBackup } from "./browserStorage.js";
 import { isPages } from "./storageMode.js";
+import { examplePlans, createExamplePlan } from "./examples.js";
 
 
 const CURRENT_PLAN_COOKIE = "zmd_current_plan_id";
@@ -119,6 +120,7 @@ class UI {
         importPlan: () => this.importPlanJson(),
         exportBackup: () => this.exportAllData(),
         importBackup: () => this.importAllData(),
+        openExample: (id) => this.openExample(id),
         openPalette: () => document.dispatchEvent(new CustomEvent("zmd-open-palette")),
       },
       catalog: {
@@ -773,6 +775,22 @@ class UI {
   }
 
   // ---------------- 方案管理 ----------------
+  async openExample(id) {
+    if (this.editingComponent) { this.toast("请先返回方案画布", "err"); return; }
+    if (this._openingExample) return;
+    const example = examplePlans.find(item => item.id === id);
+    if (!example) return;
+    this._openingExample = true;
+    try {
+      const message = `${example.description}\n\n将创建并打开一个独立方案副本。${graph.hasContent() ? "当前画布会被替换，请先保存需要保留的修改。" : ""}`;
+      if (!await dialog.confirm(message, { title: example.name })) return;
+      const saved = await api.createPlan(createExamplePlan(id));
+      await this.loadPlan(saved.meta.id);
+      this.toast("示例副本已保存，可自由修改", "ok");
+    } catch (error) { this.toast("打开示例失败：" + error.message, "err"); }
+    finally { this._openingExample = false; }
+  }
+
   exportPlanJson() {
     if (this.editingComponent) { this.toast("请先返回方案画布", "err"); return; }
     downloadJson(toPlan(this._meta(), graph.serializeNodes(), graph.serializeEdges(), graph.serializeBoards()), `${this._meta().name}.json`);
