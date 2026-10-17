@@ -14,6 +14,9 @@ import { initFontSettings } from "./fontSettings.js";
 import { initSidebarResize } from "./sidebarResize.js";
 import { choosePlanIcon, normalizePlanIcon } from "./planIcon.js";
 import { openSupplyScan } from "./supplyScan.js";
+import { downloadJson, selectJson, exportBackup, importBackup } from "./backup.js";
+import { validateBackup } from "./browserStorage.js";
+import { isPages } from "./storageMode.js";
 
 
 const CURRENT_PLAN_COOKIE = "zmd_current_plan_id";
@@ -112,6 +115,10 @@ class UI {
         groupBlackbox: () => this.openBlackboxModal(),
         exportPng: () => this.exportPng(),
         exportDyn: () => this.exportDyn(),
+        exportPlan: () => this.exportPlanJson(),
+        importPlan: () => this.importPlanJson(),
+        exportBackup: () => this.exportAllData(),
+        importBackup: () => this.importAllData(),
         openPalette: () => document.dispatchEvent(new CustomEvent("zmd-open-palette")),
       },
       catalog: {
@@ -766,6 +773,49 @@ class UI {
   }
 
   // ---------------- 方案管理 ----------------
+  exportPlanJson() {
+    if (this.editingComponent) { this.toast("请先返回方案画布", "err"); return; }
+    downloadJson(toPlan(this._meta(), graph.serializeNodes(), graph.serializeEdges(), graph.serializeBoards()), `${this._meta().name}.json`);
+  }
+
+  importPlanJson() {
+    if (this.editingComponent) { this.toast("请先返回方案画布", "err"); return; }
+    selectJson(async plan => {
+      if (!plan || !Array.isArray(plan.nodes) || !Array.isArray(plan.edges) ||
+          plan.nodes.some(node => !node || typeof node !== "object") ||
+          plan.edges.some(edge => !edge || typeof edge !== "object")) throw new Error("方案格式不正确");
+      fromPlan(plan);
+      plan.meta = { ...plan.meta };
+      delete plan.meta.id;
+      delete plan.id;
+      const saved = await api.createPlan(plan);
+      await this.openPlanManager();
+      this.toast(`已导入「${saved.meta?.name || "未命名方案"}」，可从方案列表打开`, "ok");
+    }, error => this.toast("导入失败：" + error.message, "err"));
+  }
+
+  async exportAllData() {
+    try {
+      downloadJson(await exportBackup(), "endfield-factory-backup.json");
+      this.toast("已导出已保存数据；当前画布的修改请先保存方案", "ok");
+    } catch (error) { this.toast("备份失败：" + error.message, "err"); }
+  }
+
+  importAllData() {
+    if (this.editingComponent) { this.toast("请先返回方案画布", "err"); return; }
+    selectJson(async data => {
+      validateBackup(data);
+      const suffix = isPages ? "" : "本地模式逐文件写入，失败时可能已导入部分数据，可重新导入。";
+      if (!await dialog.confirm(`将合并 ${data.plans.length} 个方案、${data.components.length} 个组件和 ${data.tempRecipes.length} 条临时配方；相同 ID 的已保存内容会被覆盖。建议先导出当前完整备份。当前画布不变。${suffix}`, { title: "导入完整备份", danger: true })) return;
+      await importBackup(data);
+      await recipes.reloadTemp();
+      this.renderFacilityChips();
+      this.renderCatalog();
+      await this.renderComponents({ refresh: true });
+      this.toast("备份已导入，可从方案列表打开", "ok");
+    }, error => this.toast("导入失败：" + error.message, "err"));
+  }
+
   _rememberCurrentPlan(id) {
     if (id) writeCookie(CURRENT_PLAN_COOKIE, String(id));
     else deleteCookie(CURRENT_PLAN_COOKIE);

@@ -2,6 +2,10 @@
 // 所有函数返回 Promise，出错时抛出带可读信息的 Error。
 
 async function request(method, url, body) {
+  if (typeof document !== "undefined" && document.querySelector('meta[name="storage-mode"]')?.content === "browser") {
+    const { browserRequest } = await import("./browserStorage.js");
+    return browserRequest(method, url, body);
+  }
   const opts = { method, headers: {} };
   if (body !== undefined) {
     opts.headers["Content-Type"] = "application/json";

@@ -1,5 +1,6 @@
 import { html, useEffect, useState } from "../../vendor/preact-standalone.module.js";
 import { PlanIcon } from "../planIcon.js";
+import { isPages } from "../storageMode.js";
 
 function MenuGroup({ label, items }) {
   const [open, setOpen] = useState(false);
@@ -26,6 +27,8 @@ export function Topbar({ warnCount, planIcon, actions }) {
     { id: "btnNew", label: "新建方案", action: actions.newPlan },
     { id: "btnOpen", label: "打开方案", action: actions.openPlans },
     { id: "btnSave", label: "保存方案", action: actions.savePlan, primary: true, hint: "Ctrl+S" },
+    { id: "btnImportPlan", label: "导入方案 JSON", action: actions.importPlan },
+    { id: "btnImportBackup", label: "导入完整备份", action: actions.importBackup },
   ];
   const toolItems = [
     { id: "btnSupplyScan", label: "原料扫描", action: actions.openSupplyScan },
@@ -35,11 +38,13 @@ export function Topbar({ warnCount, planIcon, actions }) {
     { id: "btnCommandPalette", label: "添加节点…", action: actions.openPalette, hint: "Ctrl+K" },
   ];
   const exportItems = [
+    { id: "btnExportPlan", label: "导出方案 JSON", action: actions.exportPlan },
+    { id: "btnExportBackup", label: "导出完整备份（已保存数据）", action: actions.exportBackup },
     { id: "btnExportPng", label: "导出画布 PNG", action: actions.exportPng },
     { id: "btnExportDyn", label: "导出 zmd_dyn 拓扑", action: actions.exportDyn },
   ];
   return html`
-    <div class="brand"><span class="brand-mark">⚙</span><span class="brand-title">工厂配平编辑器</span></div>
+    <div class="brand"><span class="brand-mark">⚙</span><span class="brand-title">工厂配平编辑器</span>${isPages && html`<small title="数据仅保存在当前浏览器；清除网站数据会删除保存内容，请定期导出完整备份。">浏览器保存 · 请备份</small>`}</div>
     <div class="topbar-plan"><span class="plan-label">当前方案</span><button id="btnPlanIcon" class="plan-icon-button" type="button" aria-label="选择方案图标" title="选择方案图标（随方案保存）" onClick=${actions.chooseIcon}><${PlanIcon} itemId=${planIcon} /></button><input id="planName" class="plan-name-input" type="text" defaultValue="未命名方案" spellcheck=${false} /></div>
     <div class="topbar-actions grouped">
       <${MenuGroup} label="文件" items=${fileItems} />

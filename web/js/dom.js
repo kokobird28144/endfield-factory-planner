@@ -14,7 +14,7 @@ export function esc(value) {
 }
 
 export function iconUrl(itemId) {
-  return `/item_icons/${itemId}.webp`;
+  return `./item_icons/${encodeURIComponent(itemId)}.webp`;
 }
 
 export function iconImg(itemId, className = "") {

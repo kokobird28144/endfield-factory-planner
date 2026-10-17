@@ -1,0 +1,48 @@
+name: Deploy GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/configure-pages@v5
+      - name: Assemble static site
+        shell: python
+        run: |
+          from pathlib import Path
+          import shutil
+          site = Path('_site')
+          shutil.copytree('web', site)
+          shutil.copytree('data/recipes', site / 'recipes')
+          shutil.copytree('data/item_icons', site / 'item_icons')
+          for name in ('LICENSE', 'THIRD_PARTY_NOTICES.md'):
+              shutil.copy2(name, site / name)
+          index = site / 'index.html'
+          html = index.read_text(encoding='utf-8')
+          marker = '<meta name="storage-mode" content="server" />'
+          assert html.count(marker) == 1
+          index.write_text(html.replace(marker, '<meta name="storage-mode" content="browser" />'), encoding='utf-8')
+          (site / '.nojekyll').touch()
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v4
