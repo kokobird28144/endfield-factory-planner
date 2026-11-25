@@ -344,6 +344,7 @@ class UI {
     if (rec.recipe_name.toLowerCase().includes(t)) return true;
     if ((rec.page_name_cn || "").toLowerCase().includes(t)) return true;
     if ((rec.facility_name_cn || "").toLowerCase().includes(t)) return true;
+    if ((rec.catalog_facility_name_cn || "").toLowerCase().includes(t)) return true;
     for (const p of [...rec.inputs, ...rec.outputs]) {
       if ((p.name_cn || "").toLowerCase().includes(t) || (p.item_id || "").toLowerCase().includes(t)) return true;
     }
@@ -610,6 +611,7 @@ class UI {
       const recipeSub = rec.duplicateName ? `${rec.recipe_name} · ` : "";
       head = `<div class="insp-head">${iconImg(headItem, "ih-icon")}` +
         `<div><div class="ih-title">${esc(st.label || rec.displayName || rec.recipe_name)}</div><div class="ih-sub">${esc(recipeSub + rec.facility_name_cn)} · ${fmt(rec.time_sec)}s${kindSub}</div></div></div>`;
+      if (rec.rateNote) blocks += `<div class="insp-block"><h4>${esc(rec.rateTag)}</h4><div>${esc(rec.rateNote)}</div></div>`;
       blocks += `<div class="insp-block"><h4>运行</h4>` +
         `<div class="insp-row"><span class="k">设定速度</span><span class="v">${esc(st.speed)}×</span></div>` +
         `<div class="insp-row"><span class="k">自动降速</span><span class="v">${st.auto_slow ? "开" : "关"}</span></div>` +

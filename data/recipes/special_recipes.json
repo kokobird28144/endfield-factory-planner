@@ -316,5 +316,377 @@
         "rate_per_min": 30.0
       }
     ]
+  },
+  {
+    "page_item_id": "item_xiranite_ming",
+    "page_name_cn": "明状息壤",
+    "section": "阵列配平",
+    "recipe_name": "明晦炉·明状息壤配平",
+    "facility_id": "magic_spawner_1",
+    "facility_name_cn": "明晦炉",
+    "time_sec": 60,
+    "inputs": [
+      {
+        "item_id": "item_xiranite_powder",
+        "name_cn": "息壤",
+        "qty": 25,
+        "rate_per_min": 25
+      },
+      {
+        "item_id": "item_gas_xiranite",
+        "name_cn": "息壤气",
+        "qty": 4,
+        "rate_per_min": 4
+      }
+    ],
+    "outputs": [
+      {
+        "item_id": "item_xiranite_ming",
+        "name_cn": "明状息壤",
+        "qty": 25,
+        "rate_per_min": 25
+      }
+    ]
+  },
+  {
+    "page_item_id": "item_copper_ming",
+    "page_name_cn": "明状赤铜",
+    "section": "阵列配平",
+    "recipe_name": "明晦炉·明状赤铜配平",
+    "facility_id": "magic_spawner_1",
+    "facility_name_cn": "明晦炉",
+    "time_sec": 60,
+    "inputs": [
+      {
+        "item_id": "item_copper_nugget",
+        "name_cn": "赤铜块",
+        "qty": 25,
+        "rate_per_min": 25
+      },
+      {
+        "item_id": "item_gas_xiranite",
+        "name_cn": "息壤气",
+        "qty": 4,
+        "rate_per_min": 4
+      }
+    ],
+    "outputs": [
+      {
+        "item_id": "item_copper_ming",
+        "name_cn": "明状赤铜",
+        "qty": 25,
+        "rate_per_min": 25
+      }
+    ]
+  },
+  {
+    "page_item_id": "item_xiranite_hui",
+    "page_name_cn": "晦状息壤",
+    "section": "阵列配平",
+    "recipe_name": "明晦炉·晦状息壤配平",
+    "facility_id": "magic_spawner_1",
+    "facility_name_cn": "明晦炉",
+    "time_sec": 60,
+    "inputs": [
+      {
+        "item_id": "item_xiranite_powder",
+        "name_cn": "息壤",
+        "qty": 25,
+        "rate_per_min": 25
+      },
+      {
+        "item_id": "item_gas_xiranite",
+        "name_cn": "息壤气",
+        "qty": 4,
+        "rate_per_min": 4
+      }
+    ],
+    "outputs": [
+      {
+        "item_id": "item_xiranite_hui",
+        "name_cn": "晦状息壤",
+        "qty": 25,
+        "rate_per_min": 25
+      }
+    ]
+  },
+  {
+    "page_item_id": "item_copper_hui",
+    "page_name_cn": "晦状赤铜",
+    "section": "阵列配平",
+    "recipe_name": "明晦炉·晦状赤铜配平",
+    "facility_id": "magic_spawner_1",
+    "facility_name_cn": "明晦炉",
+    "time_sec": 60,
+    "inputs": [
+      {
+        "item_id": "item_copper_nugget",
+        "name_cn": "赤铜块",
+        "qty": 25,
+        "rate_per_min": 25
+      },
+      {
+        "item_id": "item_gas_xiranite",
+        "name_cn": "息壤气",
+        "qty": 4,
+        "rate_per_min": 4
+      }
+    ],
+    "outputs": [
+      {
+        "item_id": "item_copper_hui",
+        "name_cn": "晦状赤铜",
+        "qty": 25,
+        "rate_per_min": 25
+      }
+    ]
+  },
+  {
+    "page_item_id": "item_xiranite_enr_heng",
+    "page_name_cn": "衡息壤",
+    "section": "阵列配平",
+    "recipe_name": "明晦炉·衡息壤配平",
+    "facility_id": "magic_spawner_1",
+    "facility_name_cn": "明晦炉",
+    "time_sec": 60,
+    "inputs": [
+      {
+        "item_id": "item_xiranite_powder",
+        "name_cn": "息壤",
+        "qty": 10,
+        "rate_per_min": 10
+      },
+      {
+        "item_id": "item_gas_xiranite",
+        "name_cn": "息壤气",
+        "qty": 2,
+        "rate_per_min": 2
+      }
+    ],
+    "outputs": [
+      {
+        "item_id": "item_xiranite_enr_heng",
+        "name_cn": "衡息壤",
+        "qty": 10,
+        "rate_per_min": 10
+      }
+    ]
+  },
+  {
+    "page_item_id": "item_copper_enr_heng",
+    "page_name_cn": "衡铜",
+    "section": "阵列配平",
+    "recipe_name": "明晦炉·衡铜配平",
+    "facility_id": "magic_spawner_1",
+    "facility_name_cn": "明晦炉",
+    "time_sec": 60,
+    "inputs": [
+      {
+        "item_id": "item_copper_nugget",
+        "name_cn": "赤铜块",
+        "qty": 10,
+        "rate_per_min": 10
+      },
+      {
+        "item_id": "item_gas_xiranite",
+        "name_cn": "息壤气",
+        "qty": 2,
+        "rate_per_min": 2
+      }
+    ],
+    "outputs": [
+      {
+        "item_id": "item_copper_enr_heng",
+        "name_cn": "衡铜",
+        "qty": 10,
+        "rate_per_min": 10
+      }
+    ]
+  },
+  {
+    "page_item_id": "item_xiranite_ming",
+    "page_name_cn": "明状息壤",
+    "section": "阵列配平",
+    "recipe_name": "分影明晦炉·明状息壤配平",
+    "facility_id": "magic_spawner_2",
+    "facility_name_cn": "分影明晦炉",
+    "time_sec": 60,
+    "inputs": [
+      {
+        "item_id": "item_xiranite_powder",
+        "name_cn": "息壤",
+        "qty": 25,
+        "rate_per_min": 25
+      },
+      {
+        "item_id": "item_gas_xiranite",
+        "name_cn": "息壤气",
+        "qty": 2,
+        "rate_per_min": 2
+      }
+    ],
+    "outputs": [
+      {
+        "item_id": "item_xiranite_ming",
+        "name_cn": "明状息壤",
+        "qty": 25,
+        "rate_per_min": 25
+      }
+    ]
+  },
+  {
+    "page_item_id": "item_copper_ming",
+    "page_name_cn": "明状赤铜",
+    "section": "阵列配平",
+    "recipe_name": "分影明晦炉·明状赤铜配平",
+    "facility_id": "magic_spawner_2",
+    "facility_name_cn": "分影明晦炉",
+    "time_sec": 60,
+    "inputs": [
+      {
+        "item_id": "item_copper_nugget",
+        "name_cn": "赤铜块",
+        "qty": 25,
+        "rate_per_min": 25
+      },
+      {
+        "item_id": "item_gas_xiranite",
+        "name_cn": "息壤气",
+        "qty": 2,
+        "rate_per_min": 2
+      }
+    ],
+    "outputs": [
+      {
+        "item_id": "item_copper_ming",
+        "name_cn": "明状赤铜",
+        "qty": 25,
+        "rate_per_min": 25
+      }
+    ]
+  },
+  {
+    "page_item_id": "item_xiranite_hui",
+    "page_name_cn": "晦状息壤",
+    "section": "阵列配平",
+    "recipe_name": "分影明晦炉·晦状息壤配平",
+    "facility_id": "magic_spawner_2",
+    "facility_name_cn": "分影明晦炉",
+    "time_sec": 60,
+    "inputs": [
+      {
+        "item_id": "item_xiranite_powder",
+        "name_cn": "息壤",
+        "qty": 25,
+        "rate_per_min": 25
+      },
+      {
+        "item_id": "item_gas_xiranite",
+        "name_cn": "息壤气",
+        "qty": 2,
+        "rate_per_min": 2
+      }
+    ],
+    "outputs": [
+      {
+        "item_id": "item_xiranite_hui",
+        "name_cn": "晦状息壤",
+        "qty": 25,
+        "rate_per_min": 25
+      }
+    ]
+  },
+  {
+    "page_item_id": "item_copper_hui",
+    "page_name_cn": "晦状赤铜",
+    "section": "阵列配平",
+    "recipe_name": "分影明晦炉·晦状赤铜配平",
+    "facility_id": "magic_spawner_2",
+    "facility_name_cn": "分影明晦炉",
+    "time_sec": 60,
+    "inputs": [
+      {
+        "item_id": "item_copper_nugget",
+        "name_cn": "赤铜块",
+        "qty": 25,
+        "rate_per_min": 25
+      },
+      {
+        "item_id": "item_gas_xiranite",
+        "name_cn": "息壤气",
+        "qty": 2,
+        "rate_per_min": 2
+      }
+    ],
+    "outputs": [
+      {
+        "item_id": "item_copper_hui",
+        "name_cn": "晦状赤铜",
+        "qty": 25,
+        "rate_per_min": 25
+      }
+    ]
+  },
+  {
+    "page_item_id": "item_xiranite_enr_heng",
+    "page_name_cn": "衡息壤",
+    "section": "阵列配平",
+    "recipe_name": "分影明晦炉·衡息壤配平",
+    "facility_id": "magic_spawner_2",
+    "facility_name_cn": "分影明晦炉",
+    "time_sec": 60,
+    "inputs": [
+      {
+        "item_id": "item_xiranite_powder",
+        "name_cn": "息壤",
+        "qty": 10,
+        "rate_per_min": 10
+      },
+      {
+        "item_id": "item_gas_xiranite",
+        "name_cn": "息壤气",
+        "qty": 1,
+        "rate_per_min": 1
+      }
+    ],
+    "outputs": [
+      {
+        "item_id": "item_xiranite_enr_heng",
+        "name_cn": "衡息壤",
+        "qty": 10,
+        "rate_per_min": 10
+      }
+    ]
+  },
+  {
+    "page_item_id": "item_copper_enr_heng",
+    "page_name_cn": "衡铜",
+    "section": "阵列配平",
+    "recipe_name": "分影明晦炉·衡铜配平",
+    "facility_id": "magic_spawner_2",
+    "facility_name_cn": "分影明晦炉",
+    "time_sec": 60,
+    "inputs": [
+      {
+        "item_id": "item_copper_nugget",
+        "name_cn": "赤铜块",
+        "qty": 10,
+        "rate_per_min": 10
+      },
+      {
+        "item_id": "item_gas_xiranite",
+        "name_cn": "息壤气",
+        "qty": 1,
+        "rate_per_min": 1
+      }
+    ],
+    "outputs": [
+      {
+        "item_id": "item_copper_enr_heng",
+        "name_cn": "衡铜",
+        "qty": 10,
+        "rate_per_min": 10
+      }
+    ]
   }
 ]

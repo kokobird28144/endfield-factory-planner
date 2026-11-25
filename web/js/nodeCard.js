@@ -46,7 +46,7 @@ function machineCard(st) {
       ${iconImg(headItem, "head-icon")}
       <div class="head-body">
         <div class="head-title" title="${esc(st.label || rec.displayName || rec.recipe_name)}">${esc(st.label || rec.displayName || rec.recipe_name)}${tag}</div>
-        <div class="head-sub">${esc(recipeSub + rec.facility_name_cn)} · ${fmt(rec.time_sec)}s</div>
+        <div class="head-sub" title="${esc(rec.rateNote || "")}">${esc(recipeSub + rec.facility_name_cn)} · ${esc(rec.rateTag ? rec.rateTag + " " : "")}${fmt(rec.time_sec)}s</div>
       </div>
     </div>
     <div class="card-body">

@@ -17,7 +17,7 @@ export function CommandPalette({ recipes, components, actions }) {
     const recipeItems = (recipes || []).map((recipe) => ({
       key: `recipe-${recipe.key}`, label: recipe.displayName || recipe.recipe_name,
       detail: recipe.facility_name_cn, category: "配方", recipe,
-      search: [recipe.recipe_name, recipe.displayName, recipe.facility_name_cn, ...recipe.inputs.map((p) => p.name_cn), ...recipe.outputs.map((p) => p.name_cn)].join(" ").toLowerCase(),
+      search: [recipe.recipe_name, recipe.displayName, recipe.facility_name_cn, recipe.catalog_facility_name_cn, ...recipe.inputs.map((p) => p.name_cn), ...recipe.outputs.map((p) => p.name_cn)].join(" ").toLowerCase(),
     }));
     const componentItems = (components || []).map((component) => ({ key: `component-${component.id}`, label: component.name, category: "组件", component, search: component.name.toLowerCase() }));
     return [...ELEMENTS.map((item) => ({ ...item, search: item.label.toLowerCase() })), ...recipeItems, ...componentItems]

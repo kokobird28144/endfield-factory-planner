@@ -11,11 +11,11 @@ function ItemIcon({ itemId, className = "" }) {
 
 function RecipeItem({ recipe, onUse }) {
   const item = recipe.outputs[0] || recipe.inputs[0];
-  return html`<button class="catalog-item catalog-item-button" type="button" title=${recipe.displayName || recipe.recipe_name} onClick=${() => onUse(recipe)}>
+  return html`<button class="catalog-item catalog-item-button" type="button" title=${recipe.rateNote || recipe.displayName || recipe.recipe_name} onClick=${() => onUse(recipe)}>
     <${ItemIcon} itemId=${item && item.item_id} className="thumb" />
     <span class="ci-body">
       <span class="ci-name">${recipe.displayName || recipe.recipe_name}${recipe.temporary && html` <b class="tmp-tag">临时</b>`}${recipe.special && html` <b class="spec-tag">特殊</b>`}</span>
-      <span class="ci-sub"><span>${recipe.facility_name_cn}</span>${recipe.duplicateName && html`<span class="ci-variant">原名：${recipe.recipe_name}</span>`}</span>
+      <span class="ci-sub"><span>${recipe.facility_name_cn}${recipe.rateTag && ` · ${recipe.rateTag}`}</span>${recipe.duplicateName && html`<span class="ci-variant">原名：${recipe.recipe_name}</span>`}</span>
     </span>
   </button>`;
 }

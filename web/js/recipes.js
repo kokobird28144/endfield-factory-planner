@@ -29,6 +29,13 @@ const STANDALONE_OVERHEAD_RECIPES = new Set([
   "固气转化机·消耗息壤气",
 ]);
 
+// Wiki 把这六条带上转化列在平衡炉表中。保留原始引用，在目录与画布标出实际发生的位置。
+const ARRAY_OUTPUT_MODES = new Map([
+  ["item_xiranite_ming", "明"], ["item_copper_ming", "明"],
+  ["item_xiranite_hui", "晦"], ["item_copper_hui", "晦"],
+  ["item_xiranite_enr_heng", "衡"], ["item_copper_enr_heng", "衡"],
+]);
+
 function baseKeyForMain(r) {
   return `m:${r.page_item_id || ""}|${r.recipe_name || ""}|${r.facility_id || ""}`;
 }
@@ -196,6 +203,16 @@ class RecipeStore {
       outputs,
     };
     rec.efficient = !!raw.efficient || !!FACILITY_PROPORTIONAL_INPUT[rec.facility_id];
+    if (!temporary && !special && rec.facility_id === "magic_balancer_1") {
+      const mode = ARRAY_OUTPUT_MODES.get(outputs[0]?.item_id);
+      if (mode) {
+        rec.facility_name_cn = `阵列·${mode}（带上转化）`;
+        rec.catalog_facility_id = "formation_magic";
+        rec.catalog_facility_name_cn = "明晦阵列（带上转化）";
+        rec.rateTag = "表值折算";
+        rec.rateNote = "阵列周期性作用于范围内的传送带。节点按配方表折算流量，实际产率取决于阵列布置、过带时机与转化结果，可按实测速率调整速度倍率。";
+      }
+    }
     rec.overheadOnly = !!special && STANDALONE_OVERHEAD_RECIPES.has(rec.recipe_name);
     const proportionalInput = FACILITY_PROPORTIONAL_INPUT[rec.facility_id];
     if (!rec.overheadOnly && proportionalInput && !rec.inputs.some((p) => p.proportional)) {
@@ -206,6 +223,20 @@ class RecipeStore {
     rec.baseKey = temporary ? keyForTemp(raw) : baseKeyForMain(rec);
     // 运行时 key 必须包含签名；否则同名、同设施但不同原料的变体会在 Map 中互相覆盖。
     rec.key = temporary ? rec.baseKey : keyForMain(rec);
+    // 用原配方生成签名，再折算清、浊两路期望，使旧方案仍能找到原配方和端口。
+    if (!temporary && !special && rec.facility_id === "gas_reactor_1" && outputs[0]?.item_id === "item_gas_copper_bright_clear" && rec.time_sec > 0) {
+      const turbidGas = "item_gas_copper_bright_turbid";
+      // 辉铜能量块教学 step0_14_1/2 分别给出清、浊两种结果的概率。
+      outputs[0].qty *= 0.5;
+      outputs[0].rate_per_min = outputs[0].qty * 60 / rec.time_sec;
+      const expectedQty = 2 * 0.5;
+      const turbidPort = norm({ item_id: turbidGas, name_cn: "浊型辉铜气", qty: expectedQty, rate_per_min: expectedQty * 60 / rec.time_sec });
+      const index = outputs.findIndex(p => p.item_id === turbidGas);
+      if (index < 0) outputs.push(turbidPort);
+      else outputs[index] = turbidPort;
+      rec.rateTag = "概率产出（期望）";
+      rec.rateNote = "每批有 50% 概率产出 2 份清型辉铜气，50% 概率产出 2 份浊型辉铜气。两个输出口各按每批平均 1 份配平。";
+    }
     const fixedInput = FACILITY_FIXED_INPUT[rec.facility_id];
     if (!rec.overheadOnly && fixedInput && !rec.inputs.some((p) => p.fixed)) {
       rec.inputs.push(norm(fixedInput));
